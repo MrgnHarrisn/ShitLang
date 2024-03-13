@@ -22,6 +22,8 @@ enum TokenType
 	GREATER_THAN,
 	GREATER_THAN_EQ,
 	EQEQ,	/* is equal to */
+	AND,
+	OR,
 
 	/* Order of operations */
 	LPAREN,
@@ -82,6 +84,10 @@ inline std::string type_to_str(TokenType type)
 		return "GREATER_THAN_EQ";
 	case LESS_THAN_EQ:
 		return "LESS_THAN_EQ";
+	case AND:
+		return "AND";
+	case OR:
+		return "OR";
 	default:
 		return "NONE";
 	}

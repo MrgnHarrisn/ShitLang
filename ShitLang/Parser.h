@@ -81,7 +81,8 @@ private:
         while (position < tokens.size() &&
                 (currentToken().get_type() == PLUS || currentToken().get_type() == MINUS ||
                 currentToken().get_type() == GREATER_THAN || currentToken().get_type() == LESS_THAN) || 
-                currentToken().get_type() == GREATER_THAN_EQ || currentToken().get_type() == LESS_THAN_EQ || currentToken().get_type() == EQEQ) {
+                currentToken().get_type() == GREATER_THAN_EQ || currentToken().get_type() == LESS_THAN_EQ ||
+                currentToken().get_type() == EQEQ || currentToken().get_type() == AND || currentToken().get_type() == OR) {
             TokenType opType = currentToken().get_type();
             eatToken(opType);
 
@@ -93,7 +94,7 @@ private:
                 char op = opType == PLUS ? '+' : '-';
                 node = new BinaryOperationNode(node, right, op); // Existing arithmetic node
             }
-            else if (opType == GREATER_THAN || opType == LESS_THAN || opType == GREATER_THAN_EQ || opType == LESS_THAN_EQ || opType == EQEQ) {
+            else if (opType == GREATER_THAN || opType == LESS_THAN || opType == GREATER_THAN_EQ || opType == LESS_THAN_EQ || opType == EQEQ || opType == AND || opType == OR) {
                 // char op = opType == GREATER_THAN ? '>' : '<';
                 char op;
                 switch (opType) {
@@ -102,6 +103,8 @@ private:
                 case GREATER_THAN_EQ:   op = ','; break;
                 case LESS_THAN_EQ:      op = '.'; break;
                 case EQEQ:              op = '='; break;
+                case AND:               op = '&'; break;
+                case OR:                op = '|'; break;
                 }
                 node = new RelationalOperationNode(node, right, op); // New relational node
             }
@@ -158,7 +161,7 @@ private:
         }
     }
 
-
+    // variables
     std::map<std::string, double>* variables = nullptr;
 
 };

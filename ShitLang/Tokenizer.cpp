@@ -31,7 +31,7 @@ std::vector<Token> Tokenizer::tokenize() {
         else if (current_char == '-' && isdigit(text[position + 1])) {
             // Treat as a negative number
             position++; // Advance position to correctly parse the negative number
-            auto variant = get_number(true); // Assuming get_number correctly handles negative flag
+            auto variant = get_number(true);
             double new_val = std::visit([](auto&& value) -> double {
                 return static_cast<double>(value);
                 }, variant);
@@ -70,6 +70,16 @@ std::vector<Token> Tokenizer::tokenize() {
                 tokens.push_back(Token(EQEQ, '='));
             }
         }
+        else if (current_char == '&' && text[position + 1] == '&') {
+            /* Add && token */
+            tokens.push_back(Token(AND, '&'));
+            position++;
+        }
+        else if (current_char == '|' && text[position + 1] == '|') {
+            /* Add || token */
+            tokens.push_back(Token(OR, '|'));
+            position++;
+        }
         else if (current_char == '<') {
             if (text[position + 1] == '=') {
                 tokens.push_back(Token(LESS_THAN_EQ, ',')); // is it flipping the numbers?
@@ -80,7 +90,6 @@ std::vector<Token> Tokenizer::tokenize() {
                 // the first number could be getting placed on the right
                 // the second getting placed on the first
                 // whatever it works
-                // I hate this code haven't added it yet
                 position++;
             }
             else {
@@ -94,7 +103,7 @@ std::vector<Token> Tokenizer::tokenize() {
             }
             else {
                 tokens.push_back(Token(GREATER_THAN, '>'));
-            } // it should
+            }
         }
         else if (current_char != ' ') {
             std::cout << "Current Character: " << current_char << std::endl;
@@ -107,7 +116,14 @@ std::vector<Token> Tokenizer::tokenize() {
     return tokens;
 }
 
+// I want a better error message function, having it print something like this:
 
+/*
+
+let abcdef = sdkjhfbskgiu737
+             ^^^^^^^^^^^^^^^
+             Error Message Here
+*/
 void Tokenizer::error(const std::string& message) {
     std::cerr << message << "\n";
     std::cerr << "Error occurred at position " << position << "\n";
