@@ -83,7 +83,7 @@ public:
         case '&': return left->evaluate() && right->evaluate();
         case '|': return left->evaluate() || right->evaluate();
         default: throw std::invalid_argument("Unsupported relational operation");
-        } // it bothers me so much that this works
+        }
     }
 
     ~RelationalOperationNode() {
