@@ -61,7 +61,7 @@ public:
     }
 };
 
-
+// Logic
 class RelationalOperationNode : public Node {
     Node* left;
     Node* right;
@@ -75,10 +75,13 @@ public:
         // Implement evaluation logic for relational operators
         // For example:
         switch (operation) {
-        case '<': return left->evaluate() < right->evaluate() ? 1.0 : 0.0; // True is 1, false is 0
-        case '>': return left->evaluate() > right->evaluate() ? 1.0 : 0.0;
+        case '<': return left->evaluate() < right->evaluate(); // True is 1, false is 0
+        case '>': return left->evaluate() > right->evaluate();
+        case '.': return left->evaluate() <= right->evaluate(); // Why tf does this work
+        case ',': return left->evaluate() >= right->evaluate();
+        case '=': return left->evaluate() == right->evaluate();
         default: throw std::invalid_argument("Unsupported relational operation");
-        }
+        } // it bothers me so much that this works
     }
 
     ~RelationalOperationNode() {
@@ -87,6 +90,7 @@ public:
     }
 };
 
+// MATH
 class BinaryOperationNode : public Node {
     Node* left;
     Node* right;
@@ -103,8 +107,6 @@ public:
         case '*': return left->evaluate() * right->evaluate();
         case '/': return left->evaluate() / right->evaluate();
         case '^': return std::pow(left->evaluate(), right->evaluate());
-        case '<': return left->evaluate() < right->evaluate();
-        case '>': return left->evaluate() > right->evaluate();
         default: throw std::invalid_argument("Unsupported operation");
         }
     }

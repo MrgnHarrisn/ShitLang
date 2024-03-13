@@ -79,8 +79,9 @@ private:
         Node* node = parseTerm(); // Start with the highest precedence operations
 
         while (position < tokens.size() &&
-            (currentToken().get_type() == PLUS || currentToken().get_type() == MINUS ||
-                currentToken().get_type() == GREATER_THAN || currentToken().get_type() == LESS_THAN)) {
+                (currentToken().get_type() == PLUS || currentToken().get_type() == MINUS ||
+                currentToken().get_type() == GREATER_THAN || currentToken().get_type() == LESS_THAN) || 
+                currentToken().get_type() == GREATER_THAN_EQ || currentToken().get_type() == LESS_THAN_EQ || currentToken().get_type() == EQEQ) {
             TokenType opType = currentToken().get_type();
             eatToken(opType);
 
@@ -92,8 +93,16 @@ private:
                 char op = opType == PLUS ? '+' : '-';
                 node = new BinaryOperationNode(node, right, op); // Existing arithmetic node
             }
-            else if (opType == GREATER_THAN || opType == LESS_THAN) {
-                char op = opType == GREATER_THAN ? '>' : '<';
+            else if (opType == GREATER_THAN || opType == LESS_THAN || opType == GREATER_THAN_EQ || opType == LESS_THAN_EQ || opType == EQEQ) {
+                // char op = opType == GREATER_THAN ? '>' : '<';
+                char op;
+                switch (opType) {
+                case GREATER_THAN:      op = '>'; break;
+                case LESS_THAN:         op = '<'; break;
+                case GREATER_THAN_EQ:   op = ','; break;
+                case LESS_THAN_EQ:      op = '.'; break;
+                case EQEQ:              op = '='; break;
+                }
                 node = new RelationalOperationNode(node, right, op); // New relational node
             }
         }
@@ -144,6 +153,7 @@ private:
             return node;
         }
         else {
+            std::cout << currentToken().to_str() << std::endl;
             throw std::runtime_error("Unexpected token in factor");
         }
     }

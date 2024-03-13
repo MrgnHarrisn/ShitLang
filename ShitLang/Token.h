@@ -6,22 +6,36 @@
 
 enum TokenType
 {
+	/* Types of variables */
 	INTEGER,
+	FLOAT,
+	CHAR,
+
+	/* Operators */
 	PLUS,
 	MINUS,
 	MULT,
 	DIVIDE,
 	EXPONENT,
+	LESS_THAN,
+	LESS_THAN_EQ,
+	GREATER_THAN,
+	GREATER_THAN_EQ,
+	EQEQ,	/* is equal to */
+
+	/* Order of operations */
 	LPAREN,
 	RPAREN,
-	FLOAT,
+
+	/* Literals like print, if etc. */
 	LET,
 	VARIABLE,
 	ASSIGN,
 	UNARY_OP,
-	LESS_THAN,
-	GREATER_THAN,
 	PRINT,
+	IF,
+
+	/* EoF */
 	EoF,
 };
 
@@ -64,6 +78,10 @@ inline std::string type_to_str(TokenType type)
 		return "UNARY_OP";
 	case PRINT:
 		return "PRINT";
+	case GREATER_THAN_EQ:
+		return "GREATER_THAN_EQ";
+	case LESS_THAN_EQ:
+		return "LESS_THAN_EQ";
 	default:
 		return "NONE";
 	}

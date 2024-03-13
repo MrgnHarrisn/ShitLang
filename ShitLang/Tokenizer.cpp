@@ -44,6 +44,9 @@ std::vector<Token> Tokenizer::tokenize() {
                 }, variant);
             tokens.push_back(Token(is_whole_number(new_val) ? INTEGER : FLOAT, new_val));
         }
+        else if (current_char == '\'') {
+            /* handle for a char */
+        }
         else if (current_char == '^') {
             tokens.push_back(Token(EXPONENT, '^'));
         }
@@ -62,11 +65,36 @@ std::vector<Token> Tokenizer::tokenize() {
         else if (current_char == ')') {
             tokens.push_back(Token(RPAREN, ')'));
         }
+        else if (current_char == '=') {
+            if (text[position + 1] == '=') {
+                tokens.push_back(Token(EQEQ, '='));
+            }
+        }
         else if (current_char == '<') {
-            tokens.push_back(Token(LESS_THAN, '<'));
+            if (text[position + 1] == '=') {
+                tokens.push_back(Token(LESS_THAN_EQ, ',')); // is it flipping the numbers?
+                // maybe swapping their order in the parser? no not the operations
+                // the order of the numbers e.g:
+                // 1 < 2
+                // goes into the parser -> (comes out) -> 2 < 1
+                // the first number could be getting placed on the right
+                // the second getting placed on the first
+                // whatever it works
+                // I hate this code haven't added it yet
+                position++;
+            }
+            else {
+                tokens.push_back(Token(LESS_THAN, '<'));
+            }
         }
         else if (current_char == '>') {
-            tokens.push_back(Token(GREATER_THAN, '>'));
+            if (text[position + 1] == '=') {
+                tokens.push_back(Token(GREATER_THAN_EQ, '.'));
+                position++;
+            }
+            else {
+                tokens.push_back(Token(GREATER_THAN, '>'));
+            } // it should
         }
         else if (current_char != ' ') {
             std::cout << "Current Character: " << current_char << std::endl;
@@ -151,6 +179,9 @@ void Tokenizer::handle_word(const std::string& word) {
     }
     else if (word == "print") {
         tokens.push_back(Token(PRINT, "print"));
+    }
+    else if (word == "if") {
+        /* Handle if statements */
     }
     else {
         tokens.push_back(Token(VARIABLE, word)); // Handle it as a variable usage
