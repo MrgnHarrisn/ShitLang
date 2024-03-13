@@ -77,8 +77,8 @@ public:
         switch (operation) {
         case '<': return left->evaluate() < right->evaluate(); // True is 1, false is 0
         case '>': return left->evaluate() > right->evaluate();
-        case '.': return left->evaluate() <= right->evaluate(); // Why tf does this work
-        case ',': return left->evaluate() >= right->evaluate();
+        case ',': return left->evaluate() <= right->evaluate(); // Why tf does this work
+        case '.': return left->evaluate() >= right->evaluate();
         case '=': return left->evaluate() == right->evaluate();
         case '&': return left->evaluate() && right->evaluate();
         case '|': return left->evaluate() || right->evaluate();

@@ -82,14 +82,7 @@ std::vector<Token> Tokenizer::tokenize() {
         }
         else if (current_char == '<') {
             if (text[position + 1] == '=') {
-                tokens.push_back(Token(LESS_THAN_EQ, ',')); // is it flipping the numbers?
-                // maybe swapping their order in the parser? no not the operations
-                // the order of the numbers e.g:
-                // 1 < 2
-                // goes into the parser -> (comes out) -> 2 < 1
-                // the first number could be getting placed on the right
-                // the second getting placed on the first
-                // whatever it works
+                tokens.push_back(Token(LESS_THAN_EQ, ','));
                 position++;
             }
             else {

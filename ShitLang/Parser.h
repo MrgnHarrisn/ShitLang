@@ -100,8 +100,8 @@ private:
                 switch (opType) {
                 case GREATER_THAN:      op = '>'; break;
                 case LESS_THAN:         op = '<'; break;
-                case GREATER_THAN_EQ:   op = ','; break;
-                case LESS_THAN_EQ:      op = '.'; break;
+                case GREATER_THAN_EQ:   op = '.'; break;
+                case LESS_THAN_EQ:      op = ','; break;
                 case EQEQ:              op = '='; break;
                 case AND:               op = '&'; break;
                 case OR:                op = '|'; break;
