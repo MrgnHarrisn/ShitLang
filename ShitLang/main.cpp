@@ -8,7 +8,7 @@
 #include "Parser.h"
 #include "Node.h"
 
-#define disp(msg) std::cout << msg << std::endl;
+#define disp(msg) // std::cout << msg << std::endl;
 
 void interpret(const std::string& input, std::map<std::string, double>& variables) {
     Tokenizer toker(input, &variables);
