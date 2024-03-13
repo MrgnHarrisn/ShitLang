@@ -22,6 +22,7 @@ std::vector<Token> Tokenizer::tokenize() {
         if (isalpha(current_char)) { // Handle words
             std::string word = get_word();
             handle_word(word);
+            position--;
         }
         else if (current_char == '-' && (tokens.empty() || !isdigit(text[position + 1]) || tokens.back().get_type() == LPAREN || tokens.back().get_type() == PLUS || tokens.back().get_type() == MINUS || tokens.back().get_type() == MULT || tokens.back().get_type() == DIVIDE)) {
             // Treat as subtraction operator if the '-' is not at the start or not followed by a digit
@@ -68,6 +69,7 @@ std::vector<Token> Tokenizer::tokenize() {
             tokens.push_back(Token(GREATER_THAN, '>'));
         }
         else if (current_char != ' ') {
+            std::cout << "Current Character: " << current_char << std::endl;
             error("Unknown Token");
         }
 
@@ -140,7 +142,7 @@ void Tokenizer::handle_word(const std::string& word) {
         tokens.push_back(Token(VARIABLE, var_name));
         skip_spaces();
         if (position < text.size() && text[position] == '=') {
-            // position++; // Move past '='
+            position++; // Move past '='
             tokens.push_back(Token(ASSIGN, '='));
         }
         else {
